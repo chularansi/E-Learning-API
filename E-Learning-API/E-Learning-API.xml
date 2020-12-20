@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>E-Learning-API</name>
+    </assembly>
+    <members>
+        <member name="T:E_Learning_API.Controllers.HomeController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:E_Learning_API.Controllers.HomeController.Index">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -15,5 +15,19 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.Register(E_Learning_API.DTO.UserDTO)">
+            <summary>
+            User Register
+            </summary>
+            <param name="userDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.Login(E_Learning_API.DTO.UserDTO)">
+            <summary>
+            User Login endpoint
+            </summary>
+            <param name="userDTO"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

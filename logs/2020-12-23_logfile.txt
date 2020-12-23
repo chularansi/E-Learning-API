@@ -1,0 +1,23 @@
+2020-12-23 11:54:57.0233 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 11:54:57.2351 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 12:07:44.4279 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 12:07:44.6379 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 12:49:23.6648 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 12:49:23.8682 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 12:55:27.9455 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 12:55:28.1736 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 13:12:54.4123 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 13:12:54.6266 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 15:43:33.0214 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 15:43:33.2449 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 15:46:49.1529 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 15:46:49.2039 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 15:49:03.2884 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 15:49:03.5190 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 16:54:39.6956 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 16:54:39.9376 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 16:55:17.0649 ERROR Users - RefreshToken: A second operation was started on this context before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913. - 
+2020-12-23 18:00:09.7870 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 18:00:09.8857 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-23 18:08:29.3487 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-23 18:08:29.5479 INFO Users - Login: admin@abc.no successfully authenticated

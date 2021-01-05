@@ -1,0 +1,14 @@
+2020-12-25 11:13:34.2083 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-25 11:13:34.4179 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated
+2020-12-25 11:14:23.0523 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-25 11:14:23.0918 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated
+2020-12-25 11:16:16.6812 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-25 11:16:16.7890 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated
+2020-12-25 11:17:29.7908 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-25 11:17:29.8183 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated
+2020-12-25 11:29:03.0433 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-25 11:29:03.1296 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated
+2020-12-25 11:47:04.9733 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-25 11:47:05.1154 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated
+2020-12-25 11:48:12.7923 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-25 11:48:12.8232 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated

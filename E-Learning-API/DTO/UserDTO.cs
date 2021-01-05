@@ -12,6 +12,19 @@ namespace E_Learning_API.DTO
         [EmailAddress]
         public string UserName { get; set; }
         [Required]
+        public string Password { get; set; }
+    }
+
+    public class UserRegisterDTO
+    {
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        [EmailAddress]
+        public string UserName { get; set; }
+        [Required]
         [DataType(DataType.Password)]
         [StringLength(15, ErrorMessage = "Your Password is limited to {2} to {1} characters", MinimumLength = 6)]
         public string Password { get; set; }

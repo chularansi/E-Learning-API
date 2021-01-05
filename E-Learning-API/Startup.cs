@@ -21,6 +21,11 @@ using E_Learning_API.Data.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Newtonsoft.Json.Serialization;
+using AutoMapper;
+using E_Learning_API.Mappings;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 
 namespace E_Learning_API
 {
@@ -38,40 +43,42 @@ namespace E_Learning_API
         {
             services.AddDbContext<ELearningDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("ELearningConnectionString")));
 
-            services.AddIdentity<AppUser, AppRole>(options => {
+            services.AddIdentity<AppUser, AppRole>(options =>
+            {
                 options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<ELearningDbContext>();
+                options.SignIn.RequireConfirmedEmail = true;
+            }).AddEntityFrameworkStores<ELearningDbContext>()
+              .AddDefaultTokenProviders();
+            //.AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
 
             services.AddCors(o => {
                 o.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                    //builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(o =>
-                {
-                    o.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                    };
+            services.AddAutoMapper(typeof(Maps));
 
-                    o.Events = new JwtBearerEvents
-                    {
-                        OnAuthenticationFailed = context =>
-                        {
-                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                            {
-                                context.Response.Headers.Add("Token-Expired", "true");
-                            }
-                            return Task.CompletedTask;
-                        }
-                    };
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = Configuration["Jwt:Issuer"],
+                ValidAudience = Configuration["Jwt:Issuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+            };
+
+            services.AddSingleton(tokenValidationParameters);
+
+            services.AddAuthentication(x => {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+                {
+                    o.TokenValidationParameters = tokenValidationParameters;
                 });
 
             services.AddSwaggerGen(c => {
@@ -90,8 +97,21 @@ namespace E_Learning_API
             });
 
             services.AddSingleton<ILoggerService, LoggerService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-            services.AddControllers();
+            var mailKitOptions = Configuration.GetSection("Email").Get<MailKitOptions>();
+            services.AddMailKit(option =>
+            {
+                option.UseMailKit(mailKitOptions);
+            });
+
+            services.AddControllers()
+                .AddNewtonsoftJson(option => {
+                    option.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    // Use the default property (Pascal) casing
+                    //option.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

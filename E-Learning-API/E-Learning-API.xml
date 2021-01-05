@@ -4,6 +4,41 @@
         <name>E-Learning-API</name>
     </assembly>
     <members>
+        <member name="M:E_Learning_API.Controllers.CategoriesController.GetCategories">
+            <summary>
+            Get All Categories
+            </summary>
+            <returns>A list of Books</returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.CategoriesController.GetCategory(System.Int32)">
+            <summary>
+            Get a Category by Id
+            </summary>
+            <param name="id"></param>
+            <returns>A Book record</returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.CategoriesController.Create(E_Learning_API.DTO.CreateCategoryDTO)">
+            <summary>
+            Create a Category
+            </summary>
+            <param name="createCategoryDTO"></param>
+            <returns>Book Object</returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.CategoriesController.Update(System.Int32,E_Learning_API.DTO.CategoryDTO)">
+            <summary>
+            Update a book
+            </summary>
+            <param name="id"></param>
+            <param name="categoryDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.CategoriesController.Delete(System.Int32)">
+            <summary>
+            Remove a Category
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:E_Learning_API.Controllers.HomeController">
             <summary>
             
@@ -15,11 +50,19 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:E_Learning_API.Controllers.UsersController.Register(E_Learning_API.DTO.UserDTO)">
+        <member name="M:E_Learning_API.Controllers.UsersController.Register(E_Learning_API.DTO.UserRegisterDTO)">
             <summary>
             User Register
             </summary>
-            <param name="userDTO"></param>
+            <param name="userRegisterDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.ConfirmEmail(System.String,System.String)">
+            <summary>
+            User Register
+            </summary>
+            <param name="UserId"></param>
+            <param name="Code"></param>
             <returns></returns>
         </member>
         <member name="M:E_Learning_API.Controllers.UsersController.Login(E_Learning_API.DTO.UserDTO)">
@@ -27,6 +70,13 @@
             User Login endpoint
             </summary>
             <param name="userDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.ForgetPassword(System.String)">
+            <summary>
+            User Login endpoint
+            </summary>
+            <param name="email"></param>
             <returns></returns>
         </member>
     </members>

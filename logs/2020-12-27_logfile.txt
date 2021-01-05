@@ -1,0 +1,21 @@
+2020-12-27 00:03:09.6867 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-27 00:03:09.8804 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-27 00:03:23.2956 INFO Users - Login: Login attempt from user student1@abc.no
+2020-12-27 00:03:23.3321 INFO Users - Login: student1@abc.no successfully authenticated
+2020-12-27 10:15:57.6926 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-27 10:15:57.9433 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-27 11:00:21.5554 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-27 11:00:21.8000 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-27 11:06:10.2236 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-27 11:06:10.4263 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-27 12:02:26.4882 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-27 12:02:26.6978 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-27 12:14:22.3162 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-27 12:14:22.5349 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-27 12:17:18.8000 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-27 12:17:19.0274 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-27 12:21:21.1918 INFO Users - Login: Login attempt from user student1@abc.no
+2020-12-27 12:21:21.4421 INFO Users - Login: student1@abc.no successfully authenticated
+2020-12-27 13:45:25.5837 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-27 13:45:25.8056 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-27 13:46:34.9402 ERROR Users - RefreshToken: A second operation was started on this context before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913. - 

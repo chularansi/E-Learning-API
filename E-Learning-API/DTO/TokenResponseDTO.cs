@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace E_Learning_API.DTO
 {
-    public class RefreshTokenDTO
+    public class TokenResponseDTO
     {
+        public string UserName { get; set; }
         public string Token { get; set; }
         public string RefreshToken { get; set; }
+        public string Roles { get; set; }   
     }
 }

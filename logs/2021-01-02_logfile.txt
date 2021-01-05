@@ -1,0 +1,12 @@
+2021-01-02 09:52:01.1296 ERROR Users - ConfirmEmail: InvalidToken Invalid token.
+2021-01-02 09:52:20.4786 ERROR Users - ConfirmEmail: newuser2@abc.no User email confirmation attempted failed.
+2021-01-02 10:27:57.0839 ERROR Users - Register: DuplicateUserName Username 'newuser3@abc.no' is already taken.
+2021-01-02 10:27:57.1334 ERROR Users - Register: DuplicateEmail Email 'newuser3@abc.no' is already taken.
+2021-01-02 10:27:57.1448 ERROR Users - Register: newuser3@abc.no User Registration attempted failed.
+2021-01-02 19:28:16.5104 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-01-02 19:28:16.7306 INFO Users - Login: newuser5@abc.no successfully authenticated
+2021-01-02 19:46:26.2919 INFO Users - Login: User has not confirmed email: admin@abc.no
+2021-01-02 19:46:26.7642 INFO Users - Login: User has not confirmed email: admin@abc.no
+2021-01-02 19:59:18.6383 INFO Users - Login: User has not confirmed email: admin@abc.no
+2021-01-02 19:59:50.7250 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-01-02 19:59:50.8659 INFO Users - Login: newuser5@abc.no successfully authenticated

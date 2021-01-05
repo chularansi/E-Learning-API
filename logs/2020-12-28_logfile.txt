@@ -1,0 +1,29 @@
+2020-12-28 10:55:53.4587 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 10:55:53.6745 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 16:28:58.6294 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2020-12-28 16:39:15.9269 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2020-12-28 16:39:15.9269 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 16:39:16.1667 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 16:40:24.8839 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 16:40:24.9398 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 16:48:00.7227 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 16:48:00.8237 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 17:06:52.9218 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2020-12-28 17:07:31.1776 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 17:07:31.2588 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 17:14:45.8334 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2020-12-28 17:15:47.9884 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 17:15:48.0817 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 17:29:03.5068 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 17:29:03.7195 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 17:36:24.2704 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 17:36:24.4813 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 18:21:18.5678 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 18:21:18.7806 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 18:26:24.2756 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 18:26:24.3652 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 20:14:21.0365 ERROR Users - RefreshToken: IDX12741: JWT: 'System.String' must have three segments (JWS) or five segments (JWE). - 
+2020-12-28 20:14:49.6978 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 20:14:49.8797 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-28 20:19:41.2110 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-28 20:19:41.2959 INFO Users - Login: admin@abc.no successfully authenticated

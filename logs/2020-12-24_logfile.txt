@@ -1,0 +1,5 @@
+2020-12-24 23:47:14.1838 ERROR Users - Register: DuplicateUserName Username 'chularansifernando@yahoo.com' is already taken.
+2020-12-24 23:47:14.2257 ERROR Users - Register: DuplicateEmail Email 'chularansifernando@yahoo.com' is already taken.
+2020-12-24 23:47:14.2377 ERROR Users - Register: chularansifernando@yahoo.com User Registration attempted failed.
+2020-12-24 23:49:52.3858 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-24 23:49:52.5355 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated

@@ -1,0 +1,16 @@
+2020-12-26 15:01:48.2708 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-26 15:01:48.4401 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated
+2020-12-26 15:27:49.2703 INFO Users - Login: Login attempt from user chularansifernando@yahoo.com
+2020-12-26 15:27:49.4390 INFO Users - Login: chularansifernando@yahoo.com successfully authenticated
+2020-12-26 21:13:33.6611 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-26 21:13:33.8928 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-26 22:44:07.3121 INFO Users - Login: Login attempt from user admin@abc1.no
+2020-12-26 22:44:07.3678 INFO Users - Login: admin@abc1.no not authenticated
+2020-12-26 23:28:09.3160 INFO Users - Login: Login attempt from user student1@abc.no
+2020-12-26 23:28:09.4202 INFO Users - Login: student1@abc.no successfully authenticated
+2020-12-26 23:44:15.5989 INFO Users - Login: Login attempt from user admin@abc.no
+2020-12-26 23:44:15.8184 INFO Users - Login: admin@abc.no successfully authenticated
+2020-12-26 23:48:07.1566 INFO Users - Login: Login attempt from user studen1@abc.no
+2020-12-26 23:48:07.2532 INFO Users - Login: studen1@abc.no not authenticated
+2020-12-26 23:49:34.5464 INFO Users - Login: Login attempt from user student1@abc.no
+2020-12-26 23:49:34.7700 INFO Users - Login: student1@abc.no successfully authenticated

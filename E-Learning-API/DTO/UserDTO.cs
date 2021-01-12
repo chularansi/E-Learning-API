@@ -29,4 +29,29 @@ namespace E_Learning_API.DTO
         [StringLength(15, ErrorMessage = "Your Password is limited to {2} to {1} characters", MinimumLength = 6)]
         public string Password { get; set; }
     }
+
+    public class UserResponseDTO
+    {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+        public IEnumerable<string> Errors { get; set; }
+    }
+
+    public class ForgotPasswordDTO
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+    
+    public class ChangePasswordDTO
+    {
+        [Required]
+        public string OldPassword { get; set; }
+        [Required]
+        public string NewPassword { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
 }

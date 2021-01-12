@@ -1,0 +1,1 @@
+2021-01-11 09:10:43.0679 ERROR Users - ConfirmEmail: Unable to cast object of type 'System.Net.Http.HttpResponseMessage' to type 'Microsoft.AspNetCore.Mvc.IActionResult'. - 

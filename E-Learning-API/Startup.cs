@@ -45,6 +45,7 @@ namespace E_Learning_API
 
             services.AddIdentity<AppUser, AppRole>(options =>
             {
+                options.Password.RequireDigit = true;
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
             }).AddEntityFrameworkStores<ELearningDbContext>()
@@ -63,7 +64,7 @@ namespace E_Learning_API
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidateLifetime = false,
+                ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = Configuration["Jwt:Issuer"],
                 ValidAudience = Configuration["Jwt:Issuer"],
@@ -85,8 +86,8 @@ namespace E_Learning_API
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "E-Learning API",
-                    Description = "This is API for a E-Learning",
-                    Version = "v1"
+                    Version = "v1",
+                    Description = "This is API for a E-Learning"
                 });
 
                 // get the path the project exsist
@@ -104,6 +105,8 @@ namespace E_Learning_API
             {
                 option.UseMailKit(mailKitOptions);
             });
+
+            services.AddMvc(options => options.OutputFormatters.Add(new HtmlOutputFormatter()));
 
             services.AddControllers()
                 .AddNewtonsoftJson(option => {
@@ -127,7 +130,7 @@ namespace E_Learning_API
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API");
-                c.RoutePrefix = "";
+                //c.RoutePrefix = "";
             });
 
             app.UseHttpsRedirection();

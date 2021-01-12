@@ -8,21 +8,21 @@
             <summary>
             Get All Categories
             </summary>
-            <returns>A list of Books</returns>
+            <returns>A list of Categories</returns>
         </member>
         <member name="M:E_Learning_API.Controllers.CategoriesController.GetCategory(System.Int32)">
             <summary>
             Get a Category by Id
             </summary>
             <param name="id"></param>
-            <returns>A Book record</returns>
+            <returns>A Category record</returns>
         </member>
         <member name="M:E_Learning_API.Controllers.CategoriesController.Create(E_Learning_API.DTO.CreateCategoryDTO)">
             <summary>
             Create a Category
             </summary>
             <param name="createCategoryDTO"></param>
-            <returns>Book Object</returns>
+            <returns>Category Object</returns>
         </member>
         <member name="M:E_Learning_API.Controllers.CategoriesController.Update(System.Int32,E_Learning_API.DTO.CategoryDTO)">
             <summary>
@@ -72,11 +72,26 @@
             <param name="userDTO"></param>
             <returns></returns>
         </member>
-        <member name="M:E_Learning_API.Controllers.UsersController.ForgetPassword(System.String)">
+        <member name="M:E_Learning_API.Controllers.UsersController.ForgotPassword(E_Learning_API.DTO.ForgotPasswordDTO)">
             <summary>
             User Login endpoint
             </summary>
-            <param name="email"></param>
+            <param name="forgotPasswordDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.ResetPassword(System.String,System.String)">
+            <summary>
+            User Login endpoint
+            </summary>
+            <param name="Email"></param>
+            <param name="Token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.ChangePassword(E_Learning_API.DTO.ChangePasswordDTO)">
+            <summary>
+            User Login endpoint
+            </summary>
+            <param name="changePasswordDTO"></param>
             <returns></returns>
         </member>
     </members>

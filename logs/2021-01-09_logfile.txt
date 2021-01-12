@@ -1,0 +1,13 @@
+2021-01-09 18:28:07.1527 ERROR Users - Register: DuplicateUserName Username 'newuser5@abc.no' is already taken.
+2021-01-09 18:28:07.2002 ERROR Users - Register: DuplicateEmail Email 'newuser5@abc.no' is already taken.
+2021-01-09 18:29:44.4019 ERROR Users - Register: DuplicateUserName Username 'newuser5@abc.no' is already taken.
+2021-01-09 18:29:44.4019 ERROR Users - Register: DuplicateEmail Email 'newuser5@abc.no' is already taken.
+2021-01-09 18:36:29.6439 ERROR Users - Register: PasswordRequiresDigit Passwords must have at least one digit ('0'-'9').
+2021-01-09 18:37:13.0079 ERROR Users - Register: PasswordRequiresDigit Passwords must have at least one digit ('0'-'9').
+2021-01-09 18:37:13.0175 ERROR Users - Register: PasswordRequiresUpper Passwords must have at least one uppercase ('A'-'Z').
+2021-01-09 18:37:35.4282 ERROR Users - Register: PasswordRequiresDigit Passwords must have at least one digit ('0'-'9').
+2021-01-09 18:37:35.4408 ERROR Users - Register: PasswordRequiresUpper Passwords must have at least one uppercase ('A'-'Z').
+2021-01-09 18:38:07.6200 ERROR Users - Register: DuplicateUserName Username 'newuser7@abc.no' is already taken.
+2021-01-09 18:38:07.6200 ERROR Users - Register: DuplicateEmail Email 'newuser7@abc.no' is already taken.
+2021-01-09 18:38:14.4346 ERROR Users - Register: DuplicateUserName Username 'newuser8@abc.no' is already taken.
+2021-01-09 18:38:14.4346 ERROR Users - Register: DuplicateEmail Email 'newuser8@abc.no' is already taken.

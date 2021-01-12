@@ -1,0 +1,4 @@
+2021-01-08 10:32:20.3964 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-01-08 10:32:20.6155 INFO Users - Login: newuser5@abc.no successfully authenticated
+2021-01-08 19:33:26.2311 ERROR Users - Register: DuplicateUserName Username 'newuser6@abc.no' is already taken.
+2021-01-08 19:33:26.2772 ERROR Users - Register: DuplicateEmail Email 'newuser6@abc.no' is already taken.

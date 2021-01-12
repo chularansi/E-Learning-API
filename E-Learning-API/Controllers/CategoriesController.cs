@@ -32,7 +32,7 @@ namespace E_Learning_API.Controllers
         /// <summary>
         /// Get All Categories
         /// </summary>
-        /// <returns>A list of Books</returns>
+        /// <returns>A list of Categories</returns>
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -57,7 +57,7 @@ namespace E_Learning_API.Controllers
         /// Get a Category by Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>A Book record</returns>
+        /// <returns>A Category record</returns>
         [HttpGet("{id}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -88,7 +88,7 @@ namespace E_Learning_API.Controllers
         /// Create a Category
         /// </summary>
         /// <param name="createCategoryDTO"></param>
-        /// <returns>Book Object</returns>
+        /// <returns>Category Object</returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status201Created)]

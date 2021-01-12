@@ -20,11 +20,17 @@ using Microsoft.EntityFrameworkCore;
 using NETCore.MailKit.Core;
 using E_Learning_API.Extensions;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net;
 
 namespace E_Learning_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class UsersController : ControllerBase
     {
         private readonly SignInManager<AppUser> signInManager;
@@ -61,12 +67,20 @@ namespace E_Learning_API.Controllers
         /// <returns></returns>
         [Route("register")]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Register([FromBody] UserRegisterDTO userRegisterDTO)
         {
             var errLocation = GetControllerAndActionNames();
 
             try
             {
+                if (userRegisterDTO == null || !ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
                 var firstname = userRegisterDTO.FirstName;
                 var lastname = userRegisterDTO.LastName;
                 var username = userRegisterDTO.UserName;
@@ -74,24 +88,6 @@ namespace E_Learning_API.Controllers
 
                 var user = new AppUser { FirstName = firstname, LastName = lastname, Email = username, UserName = username };
                 var result = await userManager.CreateAsync(user, password);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user, "Student");
-
-                    // Sending Confirmation Email
-                    var confirmEmailToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
-                    var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
-
-                    var confirmationLink = $"{HttpContext.GetAppUrl()}/api/Users/ConfirmEmail?UserId={user.Id}&Code={validEmailToken}";
-
-                    // here Url.Action method is not adding "ConfirmEmail" action name to link. so, I used different way to solve it
-                    //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Users", new { UserId = user.Id, Code = code }, Request.Scheme, Request.Host.ToString());
-
-                    await emailService.SendAsync(user.Email, "Confirm Your Email", $"Please confirm your e-mail by clicking this link: <a href=\"{confirmationLink}\">click here</a>", true);
-
-                    return Ok(new { result.Succeeded });
-                }
 
                 if (!result.Succeeded)
                 {
@@ -99,10 +95,25 @@ namespace E_Learning_API.Controllers
                     {
                         logger.LogError($"{errLocation}: {error.Code} {error.Description}");
                     }
-                    return ErrorHandler($"{errLocation}: {username} User Registration attempted failed.");
+
+                    var errors = result.Errors.Select(e => e.Description);
+                    return BadRequest(new UserResponseDTO { IsSuccess = false, Message = $"{username} User Registration attempted failed", Errors = errors });
                 }
 
-                return BadRequest();
+                await userManager.AddToRoleAsync(user, "Student");
+
+                // Sending Confirmation Email
+                var confirmEmailToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
+                var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
+
+                var confirmationLink = $"{HttpContext.GetAppUrl()}/api/Users/ConfirmEmail?UserId={user.Id}&Code={validEmailToken}";
+
+                // here Url.Action method is not adding "ConfirmEmail" action name to link. so, I used different way to solve it
+                //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Users", new { UserId = user.Id, Code = code }, Request.Scheme, Request.Host.ToString());
+
+                await emailService.SendAsync(user.Email, "Confirm Your Email", $"Please confirm your e-mail by clicking this link: <a href=\"{confirmationLink}\">click here</a>", true);
+                return Ok(new UserResponseDTO { IsSuccess = true, Message = "Please check your email and confirm your Email Address" });
             }
             catch (Exception ex)
             {
@@ -116,10 +127,10 @@ namespace E_Learning_API.Controllers
         /// <param name="UserId"></param>
         /// <param name="Code"></param>
         /// <returns></returns>
-        //[Route("register")]
         [HttpGet("ConfirmEmail")]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string UserId, string Code)
+        [Produces("text/html")]
+        public async Task<dynamic> ConfirmEmail(string UserId, string Code)
         {
             var errLocation = GetControllerAndActionNames();
 
@@ -142,10 +153,29 @@ namespace E_Learning_API.Controllers
                         return ErrorHandler($"{errLocation}: {user.UserName} User email confirmation attempted failed.");
                     }
 
-                    return Ok(new { message = "Your email has been confirmed" });
+                    //await emailService.SendAsync(user.Email, "Email Confirmed", $"<h1>Your email has been confirmed.</h1><p>You can login now to the system</p>", true);
+
+                    string responseString = @" 
+                        <title>Email Confirmed by E-Learning</title>
+                        <style type='text/css'>
+                        body{
+                            background-color: ##F5F5F5;
+                        }
+                        </style>
+                        <h1 style='color: #4CAF50'> Your email has been confirmed </h1>
+                        <h3 style='color: #424242'>You can login now to the E-Learning system</h3>";
+
+                    return responseString;
+
+                    //return new ContentResult
+                    //{
+                    //    ContentType = "text/html",
+                    //    StatusCode = (int)HttpStatusCode.OK,
+                    //    Content = "<html><header><title>Email Confirmed by E-Learning</title></header><body>Welcome</body></html>"
+                    //};
                 }
 
-                return BadRequest();
+                return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
             }
             catch (Exception ex)
             {
@@ -176,9 +206,9 @@ namespace E_Learning_API.Controllers
                 {
                     if (!await userManager.IsEmailConfirmedAsync(user))
                     {
-                        logger.LogInfo($"{errLocation}: User has not confirmed email: {username}");
+                        logger.LogInfo($"{errLocation}: User has not confirmed email yet: {username}");
 
-                        return Unauthorized(new { header = "Email Confirmation", errorMessage = "We sent you an Confirmation Email. Please Confirm Your Registration To Log in." });
+                        return Unauthorized(new UserResponseDTO { IsSuccess = false, Message = "Email is not confirmed" });
                     }
 
                     logger.LogInfo($"{errLocation}: Login attempt from user {username}");
@@ -213,55 +243,51 @@ namespace E_Learning_API.Controllers
 
                         await dbContext.SaveChangesAsync();
 
-                        return Ok(new { token = tokenString, refreshToken = newRefreshToken, username = user.UserName, roles = userRoles.Cast<object>().ToArray() });
+                        return Ok(new TokenResponseDTO { Token = tokenString, RefreshToken = newRefreshToken, UserName = user.UserName, Roles = userRoles.Cast<object>().ToArray() });
+                        //return Ok(new { token = tokenString, refreshToken = newRefreshToken, username = user.UserName, roles = userRoles.Cast<object>().ToArray() });
                     }
+
+                    logger.LogInfo($"{errLocation}: {username} not authenticated");
+                    return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Authentication" });
                 }
                 
-
-                logger.LogInfo($"{errLocation}: {username} not authenticated");
-                return Unauthorized(userDTO);
+                return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
             }
             catch (Exception ex)
             {
                 return ErrorHandler($"{errLocation}: {ex.Message} - {ex.InnerException}");
             }
         }
-        
+
         /// <summary>
         /// User Login endpoint
         /// </summary>
-        /// <param name="email"></param>
+        /// <param name="forgotPasswordDTO"></param>
         /// <returns></returns>
-        [Route("ForgetPassword")]
+        [Route("forgotPassword")]
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> ForgetPassword(string email)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO forgotPasswordDTO)  
         {
             var errLocation = GetControllerAndActionNames();
 
             try
             {
-                if (string.IsNullOrWhiteSpace(email))
+                if (!ModelState.IsValid)
                 {
-                    return BadRequest(email);
+                    return BadRequest();
                 }
 
+                var email = forgotPasswordDTO.Email;
                 var user = await userManager.FindByEmailAsync(email);
 
                 if (user != null)
                 {
-                    if (!await userManager.IsEmailConfirmedAsync(user))
-                    {
-                        logger.LogInfo($"{errLocation}: User has not confirmed email: {email}");
-
-                        return Unauthorized(new { header = "Email Confirmation", errorMessage = "We sent you an Confirmation Email. Please Confirm Your Registration To Log in." });
-                    }
-
                     var pwdResetToken = await userManager.GeneratePasswordResetTokenAsync(user);
                     var encodedPwdResetToken = Encoding.UTF8.GetBytes(pwdResetToken);
                     var validPwdResetToken = WebEncoders.Base64UrlEncode(encodedPwdResetToken);
 
-                    var url = $"{HttpContext.GetAppUrl()}/api/Users/ForgetPassword?email={user.Id}&token={validPwdResetToken}";
+                    var url = $"{HttpContext.GetAppUrl()}/api/Users/resetPassword?Email={user.Email}&Token={validPwdResetToken}";
 
                     await emailService.SendAsync(user.Email, "Reset Password", "<h1>Follow the instruction to reset your password</h1>" +
                         $"<p>To reset your password <a href=\"{url}\">click here</a></p>", true);
@@ -271,7 +297,80 @@ namespace E_Learning_API.Controllers
                 }
 
                 logger.LogInfo($"{errLocation}: No user associated with {email}");
-                return NotFound(new { message = "User Not Found" });
+                return BadRequest(new { message = "Invalid Request" });
+            }
+            catch (Exception ex)
+            {
+                return ErrorHandler($"{errLocation}: {ex.Message} - {ex.InnerException}");
+            }
+        }
+
+        /// <summary>
+        /// User Login endpoint
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <param name="Token"></param>
+        /// <returns></returns>
+        [Route("resetPassword")]
+        [AllowAnonymous]
+        [HttpPost]
+        [Produces("text/html")]
+        public async Task<IActionResult> ResetPassword(string Email, string Token)
+        {
+            var errLocation = GetControllerAndActionNames();
+
+            try
+            {
+                var user = await userManager.FindByEmailAsync(Email);
+                if (user != null)
+                {
+
+                   // have to complete it
+                }
+
+                logger.LogInfo($"{errLocation}: No user associated with {user.Email}");
+                return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
+            }
+            catch (Exception ex)
+            {
+                return ErrorHandler($"{errLocation}: {ex.Message} - {ex.InnerException}");
+            }
+        }
+
+        /// <summary>
+        /// User Login endpoint
+        /// </summary>
+        /// <param name="changePasswordDTO"></param>
+        /// <returns></returns>
+        [Route("changePassword")]
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO changePasswordDTO)
+        {
+            var errLocation = GetControllerAndActionNames();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                var email = changePasswordDTO.Email;
+                var user = await userManager.FindByEmailAsync(email);
+
+                if (user != null)
+                {
+                    var result = await userManager.ChangePasswordAsync(user, changePasswordDTO.OldPassword, changePasswordDTO.NewPassword);
+
+                    if (result.Succeeded)
+                    {
+                        return Ok(new { message = "Password changed Successfully" });
+                    }
+                }
+
+                logger.LogInfo($"{errLocation}: No user associated with {email}");
+                return BadRequest(new { message = "Password could not be changed. Try again later" });
             }
             catch (Exception ex)
             {
@@ -309,13 +408,15 @@ namespace E_Learning_API.Controllers
 
                 await dbContext.SaveChangesAsync();
 
-                return new ObjectResult(new 
-                {
-                    token = newJwtToken,
-                    refreshToken = newRefreshToken,
-                    username = user.UserName,
-                    userRoles = userRoles.Cast<object>().ToArray()
-                });
+                return Ok(new TokenResponseDTO { Token = newJwtToken, RefreshToken = newRefreshToken, UserName = user.UserName, Roles = userRoles.Cast<object>().ToArray() });
+
+                //return new ObjectResult(new 
+                //{
+                //    token = newJwtToken,
+                //    refreshToken = newRefreshToken,
+                //    username = user.UserName,
+                //    userRoles = userRoles.Cast<object>().ToArray()
+                //});
             }
             catch (Exception ex)
             {
@@ -369,7 +470,7 @@ namespace E_Learning_API.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public string GenerateRefreshToken()
+        private static string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
 
@@ -378,7 +479,7 @@ namespace E_Learning_API.Controllers
             return Convert.ToBase64String(randomNumber);
         }
 
-        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);

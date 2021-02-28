@@ -15,8 +15,10 @@ namespace E_Learning_API.Extensions
             {
                 return string.Empty;
             }
+            //return httpContext.User.Claims.Single(x => x.Type == "id").Value;
 
-            return httpContext.User.Claims.Single(x => x.Type == "id").Value;
+            var userId =  httpContext.User.Claims.Single(x => x.Type == "id").Value;
+            return userId;
         }
     }
 }

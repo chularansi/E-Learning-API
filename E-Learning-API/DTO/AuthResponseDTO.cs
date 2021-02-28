@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 
 namespace E_Learning_API.DTO
 {
-    public class TokenResponseDTO
+    public class AuthResponseDTO
     {
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string Token { get; set; }
         public string RefreshToken { get; set; }
-        public object[] Roles { get; set; }   
+        public object[] Roles { get; set; }
+        public bool Is2StepVerificationRequired { get; set; }
+        public string Provider { get; set; }
     }
 }

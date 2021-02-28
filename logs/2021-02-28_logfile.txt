@@ -1,0 +1,24 @@
+2021-02-28 13:18:45.1183 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 13:28:14.1005 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 13:32:08.4636 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 13:46:33.2193 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 13:53:17.8640 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-28 13:53:31.1006 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-28 14:04:45.4591 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-28 14:04:57.0043 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-28 14:11:51.5677 ERROR Categories - Create Sequence contains no matching element - 
+2021-02-28 14:32:38.2862 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-28 14:32:52.4145 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-28 15:12:14.1792 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 15:16:30.7491 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-28 15:16:41.1464 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-28 15:47:27.0914 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 15:57:15.3980 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 16:00:12.3322 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 16:04:09.3016 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 16:06:05.3037 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 16:08:55.4756 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-28 16:17:38.4161 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-28 16:17:50.6298 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-28 16:28:40.8230 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-28 16:28:51.6567 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated

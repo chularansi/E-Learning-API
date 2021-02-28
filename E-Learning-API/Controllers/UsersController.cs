@@ -23,6 +23,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace E_Learning_API.Controllers
 {
@@ -122,7 +124,7 @@ namespace E_Learning_API.Controllers
         }
 
         /// <summary>
-        /// User Register
+        /// Email Confirmation
         /// </summary>
         /// <param name="UserId"></param>
         /// <param name="Code"></param>
@@ -184,7 +186,7 @@ namespace E_Learning_API.Controllers
         }
 
         /// <summary>
-        /// User Login endpoint
+        /// User Login
         /// </summary>
         /// <param name="userDTO"></param>
         /// <returns></returns>
@@ -213,6 +215,12 @@ namespace E_Learning_API.Controllers
 
                     logger.LogInfo($"{errLocation}: Login attempt from user {username}");
                     var result = await signInManager.PasswordSignInAsync(username, password, false, false);
+
+                    if (result.RequiresTwoFactor)
+                    {
+                        //if (await userManager.GetTwoFactorEnabledAsync(user))
+                        return await GenerateOTPFor2StepVerification(user);
+                    }
 
                     if (result.Succeeded)
                     {
@@ -243,7 +251,7 @@ namespace E_Learning_API.Controllers
 
                         await dbContext.SaveChangesAsync();
 
-                        return Ok(new TokenResponseDTO { Token = tokenString, RefreshToken = newRefreshToken, UserName = user.UserName, Roles = userRoles.Cast<object>().ToArray() });
+                        return Ok(new AuthResponseDTO { Token = tokenString, RefreshToken = newRefreshToken, Username = user.UserName, Roles = userRoles.Cast<object>().ToArray() });
                         //return Ok(new { token = tokenString, refreshToken = newRefreshToken, username = user.UserName, roles = userRoles.Cast<object>().ToArray() });
                     }
 
@@ -260,7 +268,72 @@ namespace E_Learning_API.Controllers
         }
 
         /// <summary>
-        /// User Login endpoint
+        /// Two Step Verification
+        /// </summary>
+        /// <param name="twoFactorDTO"></param>
+        /// <returns></returns>
+        [Route("twoStepVerification")]
+        [HttpPost]
+        public async Task<IActionResult> TwoStepVerification([FromBody] TwoFactorDTO twoFactorDTO)
+        {
+            var errLocation = GetControllerAndActionNames();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
+                }
+
+                var user = await userManager.FindByEmailAsync(twoFactorDTO.Email);
+                if (user == null)
+                {
+                    return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
+                }
+
+                var validVerification = await userManager.VerifyTwoFactorTokenAsync(user, twoFactorDTO.Provider, twoFactorDTO.Token);
+                if (!validVerification)
+                {
+                    return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Token Verification" });
+                }
+
+                logger.LogInfo($"{errLocation}: {user.UserName} successfully authenticated");
+                var userRoles = (await signInManager.UserManager.GetRolesAsync(user)).ToList();
+
+                var tokenString = await GenerateJSONWebToken(user);
+                var newRefreshToken = GenerateRefreshToken();
+
+                var userRefreshToken = dbContext.RefreshTokens.Where(urt => urt.UserId == user.Id).FirstOrDefault();
+
+                if (userRefreshToken != null)
+                {
+                    userRefreshToken.Token = newRefreshToken;
+                    userRefreshToken.ExpiryDate = DateTime.Now.AddMonths(6);
+                }
+                else
+                {
+                    var refreshToken = new RefreshToken
+                    {
+                        UserId = user.Id,
+                        Token = newRefreshToken,
+                        ExpiryDate = DateTime.Now.AddMonths(6)
+                    };
+
+                    dbContext.RefreshTokens.Add(refreshToken);
+                }
+
+                await dbContext.SaveChangesAsync();
+
+                return Ok(new AuthResponseDTO { Token = tokenString, RefreshToken = newRefreshToken, Username = user.UserName, Roles = userRoles.Cast<object>().ToArray() });
+            }
+            catch (Exception ex)
+            {
+                return ErrorHandler($"{errLocation}: {ex.Message} - {ex.InnerException}");
+            }
+        }
+
+        /// <summary>
+        /// Forgot Password
         /// </summary>
         /// <param name="forgotPasswordDTO"></param>
         /// <returns></returns>
@@ -287,17 +360,27 @@ namespace E_Learning_API.Controllers
                     var encodedPwdResetToken = Encoding.UTF8.GetBytes(pwdResetToken);
                     var validPwdResetToken = WebEncoders.Base64UrlEncode(encodedPwdResetToken);
 
-                    var url = $"{HttpContext.GetAppUrl()}/api/Users/resetPassword?Email={user.Email}&Token={validPwdResetToken}";
+                    var param = new Dictionary<string, string>
+                    {
+                        {"Email", forgotPasswordDTO.Email },
+                        {"Token", validPwdResetToken }
+                    };
+                    var callback = QueryHelpers.AddQueryString(forgotPasswordDTO.ClientURI, param);
 
+                    //var url = $"{HttpContext.GetAppUrl()}/api/Users/resetPassword?Email={user.Email}&Token={validPwdResetToken}";
+
+                    //await emailService.SendAsync(user.Email, "Reset Password", "<h1>Follow the instruction to reset your password</h1>" +
+                    //    $"<p>To reset your password <a href=\"{url}\">click here</a></p>", true);
+                    
                     await emailService.SendAsync(user.Email, "Reset Password", "<h1>Follow the instruction to reset your password</h1>" +
-                        $"<p>To reset your password <a href=\"{url}\">click here</a></p>", true);
+                        $"<p>To reset your password <a href=\"{callback}\">click here</a></p>", true);
 
-                    return Ok(new { message = "Success" });
+                    return Ok(new UserResponseDTO { IsSuccess = true, Message = "The link has been sent, please check your email to reset your password" });
 
                 }
 
                 logger.LogInfo($"{errLocation}: No user associated with {email}");
-                return BadRequest(new { message = "Invalid Request" });
+                return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
             }
             catch (Exception ex)
             {
@@ -306,26 +389,49 @@ namespace E_Learning_API.Controllers
         }
 
         /// <summary>
-        /// User Login endpoint
+        /// Reset Password
         /// </summary>
-        /// <param name="Email"></param>
-        /// <param name="Token"></param>
+        /// <param name="resetPasswordDTO"></param>
         /// <returns></returns>
         [Route("resetPassword")]
         [AllowAnonymous]
         [HttpPost]
-        [Produces("text/html")]
-        public async Task<IActionResult> ResetPassword(string Email, string Token)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
         {
             var errLocation = GetControllerAndActionNames();
 
             try
             {
-                var user = await userManager.FindByEmailAsync(Email);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
+                }
+
+                var user = await userManager.FindByEmailAsync(resetPasswordDTO.Email);
                 if (user != null)
                 {
+                    var encodedPasswordToken = WebEncoders.Base64UrlDecode(resetPasswordDTO.Token);
+                    var confirmPasswordToken = Encoding.UTF8.GetString(encodedPasswordToken);
 
-                   // have to complete it
+                    var result = await userManager.ResetPasswordAsync(user, confirmPasswordToken, resetPasswordDTO.Password);
+
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            logger.LogError($"{errLocation}: {error.Code} {error.Description}");
+                        }
+                        return ErrorHandler($"{errLocation}: {user.UserName} User reset password confirmation attempted failed.");
+                    }
+                    //var fileContents = System.IO.File.ReadAllText("./Content/ResetPassword.html");
+                    //return new ContentResult
+                    //{
+                    //    Content = fileContents,
+                    //    ContentType = "text/html"
+                    //};
+                    // have to complete it
+                    return Ok(new UserResponseDTO { IsSuccess = true, Message = "Password reset successfully" });
+
                 }
 
                 logger.LogInfo($"{errLocation}: No user associated with {user.Email}");
@@ -337,8 +443,43 @@ namespace E_Learning_API.Controllers
             }
         }
 
+        //[Route("updateResetPassword")]
+        //[AllowAnonymous]
+        //[HttpPost]
+        //[Consumes("application/x-www-form-urlencoded")]
+        ////[Produces("text/html")]
+        //public IActionResult UpdateResetPassword([FromForm] ResetPasswordDTO resetPassword)
+        ////public IActionResult UpdateResetPassword(string resetPassword)  
+        //{
+        //    var errLocation = GetControllerAndActionNames();
+
+        //    //ResetPasswordDTO resetPasswordDTO = JsonConvert.DeserializeObject<ResetPasswordDTO>(resetPassword);
+
+        //    try
+        //    {
+        //        //var user = await userManager.FindByEmailAsync(Email);
+        //        //if (user != null)
+        //        //{
+        //        //    var fileContents = System.IO.File.ReadAllText("./Content/ResetPassword.html");
+        //        //    return new ContentResult
+        //        //    {
+        //        //        Content = fileContents,
+        //        //        ContentType = "text/html"
+        //        //    };
+        //        //    // have to complete it
+        //        //}
+
+        //        //logger.LogInfo($"{errLocation}: No user associated with {user.Email}");
+        //        return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ErrorHandler($"{errLocation}: {ex.Message} - {ex.InnerException}");
+        //    }
+        //}
+
         /// <summary>
-        /// User Login endpoint
+        /// Change Password
         /// </summary>
         /// <param name="changePasswordDTO"></param>
         /// <returns></returns>
@@ -378,6 +519,11 @@ namespace E_Learning_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Refresh Token
+        /// </summary>
+        /// <param name="refreshTokenDTO"></param>
+        /// <returns></returns>
         [Route("refreshToken")]
         [AllowAnonymous]
         [HttpPost]
@@ -408,7 +554,7 @@ namespace E_Learning_API.Controllers
 
                 await dbContext.SaveChangesAsync();
 
-                return Ok(new TokenResponseDTO { Token = newJwtToken, RefreshToken = newRefreshToken, UserName = user.UserName, Roles = userRoles.Cast<object>().ToArray() });
+                return Ok(new AuthResponseDTO { Token = newJwtToken, RefreshToken = newRefreshToken, Username = user.UserName, Roles = userRoles.Cast<object>().ToArray() });
 
                 //return new ObjectResult(new 
                 //{
@@ -424,22 +570,39 @@ namespace E_Learning_API.Controllers
             }
         }
 
-        [Route("revokeToken")]
+        /// <summary>
+        /// User Logout
+        /// </summary>
+        /// <returns></returns>
+        [Route("logout")]
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> RevokeRefreshToken()
+        [HttpGet]
+        public async Task<bool> Logout()
         {
             var username = User.Identity.Name;
 
             var user = dbContext.AppUsers.SingleOrDefault(u => u.UserName == username);
-            if (user == null) return BadRequest();
 
             var userRefreshToken = dbContext.RefreshTokens.Where(urt => urt.UserId == user.Id).FirstOrDefault();
             userRefreshToken.Token = null;
 
-            await dbContext.SaveChangesAsync();
+            return await dbContext.SaveChangesAsync() > 0;
+        }
 
-            return NoContent();
+        private async Task<IActionResult> GenerateOTPFor2StepVerification(AppUser user)
+        {
+            var providers = await userManager.GetValidTwoFactorProvidersAsync(user);
+            if (!providers.Contains("Email"))
+            {
+                return Unauthorized(new UserResponseDTO { IsSuccess = false, Message = "Invalid 2-Step Verification Provider." });
+            }
+            var token = await userManager.GenerateTwoFactorTokenAsync(user, "Email");
+
+            await emailService.SendAsync(user.Email, "Authentication Token", "<h1>2-Step Verification</h1>" +
+                        $"<p>This is your new OTP: {token}</p>", true);
+
+            //return Ok(new UserResponseDTO { IsSuccess = true, Message = "Validated 2-Step Verification Provider." });
+            return Ok(new AuthResponseDTO { Is2StepVerificationRequired = true, Provider = "Email" });
         }
 
         private async Task<string> GenerateJSONWebToken(AppUser user)
@@ -464,7 +627,7 @@ namespace E_Learning_API.Controllers
                 config["Jwt:Issuer"],
                 claims,
                 null,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

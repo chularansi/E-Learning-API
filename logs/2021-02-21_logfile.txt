@@ -1,0 +1,29 @@
+2021-02-21 14:41:19.6133 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-21 14:41:33.6786 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-21 15:51:25.0197 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-21 15:51:39.4290 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-21 18:23:04.8315 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-21 18:30:56.9738 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-21 19:28:06.3793 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-21 19:31:46.1182 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2021-02-21 19:32:39.6469 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-21 19:41:02.8332 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-21 19:41:15.5440 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-21 19:49:11.3623 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2021-02-21 19:52:12.3308 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2021-02-21 19:53:09.7674 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-21 19:53:26.6535 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-02-21 19:54:12.1590 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2021-02-21 19:54:44.0679 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-02-21 19:54:44.1332 INFO Users - Login: newuser5@abc.no successfully authenticated
+2021-02-21 19:55:30.2836 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2021-02-21 19:56:53.1588 ERROR Users - RefreshToken: IDX10000: The parameter 'token' cannot be a 'null' or an empty object. (Parameter 'token') - 
+2021-02-21 20:04:55.8496 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-21 20:17:54.6603 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-21 20:18:33.8372 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-21 20:19:15.4483 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-21 20:21:36.4451 ERROR Users - RefreshToken: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'. - 
+2021-02-21 20:27:26.7076 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-02-21 20:27:26.8751 INFO Users - Login: newuser5@abc.no successfully authenticated
+2021-02-21 20:29:24.3498 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-21 20:29:37.6468 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated

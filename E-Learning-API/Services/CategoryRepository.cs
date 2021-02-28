@@ -1,5 +1,6 @@
 ﻿using E_Learning_API.Data;
 using E_Learning_API.Data.Entities;
+using E_Learning_API.Services.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,12 @@ namespace E_Learning_API.Services
             return await Save();
         }
 
-        public async Task<IList<Category>> FindAll()
+        public async Task<PagedList<Category>> FindAll(PaginationParams paginationParams)
         {
             //return await dbContext.Categories.Include(q => q.Books).ToListAsync();
-            return await dbContext.Categories.ToListAsync();
+            //return await dbContext.Categories.ToListAsync();
+            var categories = dbContext.Categories.AsNoTracking();
+            return await PagedList<Category>.CreateAsync(categories, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
         public async Task<Category> FindById(int id)

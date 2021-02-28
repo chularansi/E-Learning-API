@@ -42,6 +42,9 @@ namespace E_Learning_API.DTO
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        public string ClientURI { get; set; }
     }
     
     public class ChangePasswordDTO
@@ -54,4 +57,29 @@ namespace E_Learning_API.DTO
         [EmailAddress]
         public string Email { get; set; }
     }
+
+    public class ResetPasswordDTO
+    {
+        [Required(ErrorMessage = "Password is required")]
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string Token { get; set; }
+    }
+
+    public class TwoFactorDTO
+    {
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Provider { get; set; }
+        [Required]
+        public string Token { get; set; }
+    }
+    
+    public class LogoutDTO
+    {
+        [Required]
+        public string Username { get; set; }
+    }
 }
+

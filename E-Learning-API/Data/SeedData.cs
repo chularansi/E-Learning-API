@@ -25,6 +25,7 @@ namespace E_Learning_API.Data
 
                 if (result.Succeeded)
                 {
+                    await userManager.SetTwoFactorEnabledAsync(user, true);
                     await userManager.AddToRoleAsync(user, "Admin");
                 }
             }

@@ -4,10 +4,11 @@
         <name>E-Learning-API</name>
     </assembly>
     <members>
-        <member name="M:E_Learning_API.Controllers.CategoriesController.GetCategories">
+        <member name="M:E_Learning_API.Controllers.CategoriesController.GetCategories(E_Learning_API.Services.Pagination.PaginationParams)">
             <summary>
             Get All Categories
             </summary>
+            <param name="paginationParams"></param>
             <returns>A list of Categories</returns>
         </member>
         <member name="M:E_Learning_API.Controllers.CategoriesController.GetCategory(System.Int32)">
@@ -17,7 +18,7 @@
             <param name="id"></param>
             <returns>A Category record</returns>
         </member>
-        <member name="M:E_Learning_API.Controllers.CategoriesController.Create(E_Learning_API.DTO.CreateCategoryDTO)">
+        <member name="M:E_Learning_API.Controllers.CategoriesController.Create(E_Learning_API.DTO.CategoryDTO)">
             <summary>
             Create a Category
             </summary>
@@ -26,7 +27,7 @@
         </member>
         <member name="M:E_Learning_API.Controllers.CategoriesController.Update(System.Int32,E_Learning_API.DTO.CategoryDTO)">
             <summary>
-            Update a book
+            Update a Category
             </summary>
             <param name="id"></param>
             <param name="categoryDTO"></param>
@@ -39,17 +40,6 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:E_Learning_API.Controllers.HomeController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:E_Learning_API.Controllers.HomeController.Index">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:E_Learning_API.Controllers.UsersController.Register(E_Learning_API.DTO.UserRegisterDTO)">
             <summary>
             User Register
@@ -59,7 +49,7 @@
         </member>
         <member name="M:E_Learning_API.Controllers.UsersController.ConfirmEmail(System.String,System.String)">
             <summary>
-            User Register
+            Email Confirmation
             </summary>
             <param name="UserId"></param>
             <param name="Code"></param>
@@ -67,31 +57,50 @@
         </member>
         <member name="M:E_Learning_API.Controllers.UsersController.Login(E_Learning_API.DTO.UserDTO)">
             <summary>
-            User Login endpoint
+            User Login
             </summary>
             <param name="userDTO"></param>
             <returns></returns>
         </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.TwoStepVerification(E_Learning_API.DTO.TwoFactorDTO)">
+            <summary>
+            Two Step Verification
+            </summary>
+            <param name="twoFactorDTO"></param>
+            <returns></returns>
+        </member>
         <member name="M:E_Learning_API.Controllers.UsersController.ForgotPassword(E_Learning_API.DTO.ForgotPasswordDTO)">
             <summary>
-            User Login endpoint
+            Forgot Password
             </summary>
             <param name="forgotPasswordDTO"></param>
             <returns></returns>
         </member>
-        <member name="M:E_Learning_API.Controllers.UsersController.ResetPassword(System.String,System.String)">
+        <member name="M:E_Learning_API.Controllers.UsersController.ResetPassword(E_Learning_API.DTO.ResetPasswordDTO)">
             <summary>
-            User Login endpoint
+            Reset Password
             </summary>
-            <param name="Email"></param>
-            <param name="Token"></param>
+            <param name="resetPasswordDTO"></param>
             <returns></returns>
         </member>
         <member name="M:E_Learning_API.Controllers.UsersController.ChangePassword(E_Learning_API.DTO.ChangePasswordDTO)">
             <summary>
-            User Login endpoint
+            Change Password
             </summary>
             <param name="changePasswordDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.RefreshToken(E_Learning_API.DTO.RefreshTokenDTO)">
+            <summary>
+            Refresh Token
+            </summary>
+            <param name="refreshTokenDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:E_Learning_API.Controllers.UsersController.Logout">
+            <summary>
+            User Logout
+            </summary>
             <returns></returns>
         </member>
     </members>

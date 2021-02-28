@@ -52,10 +52,15 @@ namespace E_Learning_API
               .AddDefaultTokenProviders();
             //.AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
 
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromHours(2);
+            });
+
             services.AddCors(o => {
                 o.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-                    //builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
+                    //builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("https://localhost:4200"));
             });
 
             services.AddAutoMapper(typeof(Maps));
@@ -64,7 +69,7 @@ namespace E_Learning_API
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidateLifetime = true,
+                ValidateLifetime = false,
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = Configuration["Jwt:Issuer"],
                 ValidAudience = Configuration["Jwt:Issuer"],
@@ -130,7 +135,6 @@ namespace E_Learning_API
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API");
-                //c.RoutePrefix = "";
             });
 
             app.UseHttpsRedirection();

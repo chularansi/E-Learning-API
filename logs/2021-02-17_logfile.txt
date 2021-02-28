@@ -1,0 +1,8 @@
+2021-02-17 10:27:30.2859 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-02-17 10:27:30.4957 INFO Users - Login: newuser5@abc.no successfully authenticated
+2021-02-17 10:34:07.7917 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-02-17 10:34:07.8337 INFO Users - Login: newuser5@abc.no not authenticated
+2021-02-17 10:34:34.1704 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-02-17 10:34:34.2169 INFO Users - Login: newuser5@abc.no successfully authenticated
+2021-02-17 15:49:57.7568 INFO Users - Login: Login attempt from user admin@abc.no
+2021-02-17 15:50:12.6348 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated

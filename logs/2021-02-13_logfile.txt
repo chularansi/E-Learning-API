@@ -1,0 +1,2 @@
+2021-02-13 16:43:51.0198 INFO Users - Login: Login attempt from user newuser5@abc.no
+2021-02-13 16:43:51.1859 INFO Users - Login: newuser5@abc.no successfully authenticated

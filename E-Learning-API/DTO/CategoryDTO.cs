@@ -7,17 +7,15 @@ namespace E_Learning_API.DTO
 {
     public class CategoryDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string CategoryName { get; set; }
-        //public int UserId { get; set; }
     }
 
-    public class CreateCategoryDTO
-    {
-        public string CategoryName { get; set; }
+    //public class CreateCategoryDTO
+    //{
+    //    public string CategoryName { get; set; }
 
-        //public int UserId { get; set; }
-    }
+    //}
 
     //public class UpdateCategoryDTO
     //{

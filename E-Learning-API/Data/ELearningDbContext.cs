@@ -18,6 +18,5 @@ namespace E_Learning_API.Data
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        //public DbSet<Book> Books { get; set; }
     }
 }

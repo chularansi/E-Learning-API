@@ -13,7 +13,7 @@ namespace E_Learning_API.Mappings
         public Maps()
         {
             CreateMap<Category, CategoryDTO>().ReverseMap();
-            CreateMap<Category, CreateCategoryDTO>().ReverseMap();
+            //CreateMap<Category, CreateCategoryDTO>().ReverseMap();
             //CreateMap<Author, AuthorUpdateDTO>().ReverseMap();
             //CreateMap<Book, BookDTO>().ReverseMap();
             //CreateMap<Book, BookCreateDTO>().ReverseMap();

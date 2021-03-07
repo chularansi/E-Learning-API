@@ -2,9 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Learning_API.Data.Entities
+namespace DataService.Models
 {
     public class AppRole : IdentityRole<int>
     {

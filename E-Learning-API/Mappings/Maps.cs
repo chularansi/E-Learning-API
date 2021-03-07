@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using E_Learning_API.Data.Entities;
+using DataService.Models;
 using E_Learning_API.DTO;
 using System;
 using System.Collections.Generic;

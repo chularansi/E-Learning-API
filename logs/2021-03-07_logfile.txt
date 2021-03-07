@@ -1,0 +1,2 @@
+2021-03-07 17:09:04.1482 INFO Users - Login: Login attempt from user admin@abc.no
+2021-03-07 17:09:25.5858 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated

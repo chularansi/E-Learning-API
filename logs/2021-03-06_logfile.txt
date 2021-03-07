@@ -1,0 +1,12 @@
+2021-03-06 21:01:45.7795 INFO Users - Login: Login attempt from user admin@abc.no
+2021-03-06 21:02:13.7674 INFO Users - TwoStepVerification: admin@abc.no successfully authenticated
+2021-03-06 21:15:30.8944 ERROR Categories - Create Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Object -> Category
+System.Object -> DataService.Models.Category - 
+2021-03-06 21:15:48.1989 ERROR Categories - Create Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Object -> Category
+System.Object -> DataService.Models.Category - 

@@ -1,5 +1,5 @@
-﻿using E_Learning_API.Data;
-using E_Learning_API.Data.Entities;
+﻿using DataService;
+using DataService.Models;
 using E_Learning_API.Services.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System;

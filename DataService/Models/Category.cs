@@ -5,20 +5,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E_Learning_API.Data.Entities
+namespace DataService.Models
 {
-    [Table("RefreshTokens")]
-    public class RefreshToken
+    [Table("Categories")]
+    public class Category
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Token { get; set; }
-        public DateTime ExpiryDate { get; set; }
-
-        [ForeignKey("UserId")]
-        public AppUser AppUser { get; set; }
+        public string CategoryName { get; set; }
 
         public int UserId { get; set; }
+
+        //[ForeignKey(nameof(UserId))]
+        [ForeignKey("UserId")]
+        public AppUser AppUser { get; set; }
     }
 }

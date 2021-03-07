@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using E_Learning_API.Data.Entities;
 using E_Learning_API.DTO;
 using E_Learning_API.Extensions;
 using E_Learning_API.Services;
@@ -13,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DataService.Models;
+using LoggingService;
 
 namespace E_Learning_API.Controllers
 {

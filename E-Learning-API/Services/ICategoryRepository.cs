@@ -1,4 +1,4 @@
-﻿using E_Learning_API.Data.Entities;
+﻿using DataService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

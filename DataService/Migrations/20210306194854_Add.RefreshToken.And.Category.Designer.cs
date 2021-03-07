@@ -3,15 +3,17 @@ using System;
 using DataService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace E_Learning_API.Migrations
+namespace DataService.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210306194854_Add.RefreshToken.And.Category")]
+    partial class AddRefreshTokenAndCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace E_Learning_API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.AppRole", b =>
+            modelBuilder.Entity("DataService.Models.AppRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,9 +47,25 @@ namespace E_Learning_API.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "0af8cc99-97f1-48dd-854c-5afcc7adf0e3",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "99e720a9-0b5c-4b8d-a712-4c21164310a8",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        });
                 });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.AppUser", b =>
+            modelBuilder.Entity("DataService.Models.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,9 +135,49 @@ namespace E_Learning_API.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1d40139b-a82b-47ed-9459-aa79ca2a476a",
+                            Email = "admin@abc.no",
+                            EmailConfirmed = true,
+                            FirstName = "Super",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ABC.NO",
+                            NormalizedUserName = "ADMIN@ABC.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHKsijQ0NgqeLFPO+IHUQCF0D6hdb4B2xuYLgwBaQNms096K0BLgmTxuptfmr/HR+g==",
+                            PhoneNumber = "1234567895",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "0acc6459-8dd3-4eb2-9370-6df0a28e853c",
+                            TwoFactorEnabled = true,
+                            UserName = "admin@abc.no"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "03f796ed-85ea-48cc-b99c-9475b8b0062e",
+                            Email = "student1@abc.no",
+                            EmailConfirmed = true,
+                            FirstName = "Master",
+                            LastName = "Student",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "STUDENT1@ABC.NO",
+                            NormalizedUserName = "STUDENT1@ABC.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHC5dWuZXffAdiSbqZDoMS4riuGnqh0kWa505pSabllge1IWX+8E85vPSDSb1j51pQ==",
+                            PhoneNumber = "1234567895",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "93e55ba9-6bae-408d-b905-36f83eb5937b",
+                            TwoFactorEnabled = false,
+                            UserName = "student1@abc.no"
+                        });
                 });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.Category", b =>
+            modelBuilder.Entity("DataService.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,7 +197,7 @@ namespace E_Learning_API.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.RefreshToken", b =>
+            modelBuilder.Entity("DataService.Models.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -242,6 +300,13 @@ namespace E_Learning_API.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -263,9 +328,9 @@ namespace E_Learning_API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.Category", b =>
+            modelBuilder.Entity("DataService.Models.Category", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", "AppUser")
+                    b.HasOne("DataService.Models.AppUser", "AppUser")
                         .WithMany("Categories")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -274,9 +339,9 @@ namespace E_Learning_API.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.RefreshToken", b =>
+            modelBuilder.Entity("DataService.Models.RefreshToken", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", "AppUser")
+                    b.HasOne("DataService.Models.AppUser", "AppUser")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -287,7 +352,7 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppRole", null)
+                    b.HasOne("DataService.Models.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -296,7 +361,7 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", null)
+                    b.HasOne("DataService.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -305,7 +370,7 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", null)
+                    b.HasOne("DataService.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,13 +379,13 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppRole", null)
+                    b.HasOne("DataService.Models.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", null)
+                    b.HasOne("DataService.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -329,14 +394,14 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", null)
+                    b.HasOne("DataService.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.AppUser", b =>
+            modelBuilder.Entity("DataService.Models.AppUser", b =>
                 {
                     b.Navigation("Categories");
 

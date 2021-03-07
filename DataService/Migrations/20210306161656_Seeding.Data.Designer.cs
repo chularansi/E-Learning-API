@@ -3,15 +3,17 @@ using System;
 using DataService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace E_Learning_API.Migrations
+namespace DataService.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210306161656_Seeding.Data")]
+    partial class SeedingData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace E_Learning_API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.AppRole", b =>
+            modelBuilder.Entity("DataService.Models.AppRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,9 +47,25 @@ namespace E_Learning_API.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "a19fd19a-8f86-441a-a590-5ccfbf8313b3",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "2408f7a1-a511-45e9-bb97-6e1f15af5655",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        });
                 });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.AppUser", b =>
+            modelBuilder.Entity("DataService.Models.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,49 +135,46 @@ namespace E_Learning_API.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("E_Learning_API.Data.Entities.RefreshToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "863e1382-e9e5-4b04-b6d5-7cc05a3aae81",
+                            Email = "admin@abc.no",
+                            EmailConfirmed = true,
+                            FirstName = "Super",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ABC.NO",
+                            NormalizedUserName = "ADMIN@ABC.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAECHeUMFxQLN8e0Msor73jaB3p4BxbGC4Ciwy/f0TD4IGpy9s5jzH+to7VMo4ymF4fQ==",
+                            PhoneNumber = "1234567895",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "94785b78-7be4-469a-9ca6-c538c5eee60d",
+                            TwoFactorEnabled = true,
+                            UserName = "admin@abc.no"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9223f0a9-d2ca-44b1-8c40-0622d42306d0",
+                            Email = "student1@abc.no",
+                            EmailConfirmed = true,
+                            FirstName = "Master",
+                            LastName = "Student",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "STUDENT1@ABC.NO",
+                            NormalizedUserName = "STUDENT1@ABC.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKy6ubFcyoDgJj9f47E2M6fEXMr2W75VLC00dWt8QlWWGMc4x4t2CHbSW6YrWAE7Mw==",
+                            PhoneNumber = "1234567895",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "139aa371-9371-47bf-a75b-56f539854242",
+                            TwoFactorEnabled = false,
+                            UserName = "student1@abc.no"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -242,6 +257,13 @@ namespace E_Learning_API.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -263,31 +285,9 @@ namespace E_Learning_API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("E_Learning_API.Data.Entities.Category", b =>
-                {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", "AppUser")
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("E_Learning_API.Data.Entities.RefreshToken", b =>
-                {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", "AppUser")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppRole", null)
+                    b.HasOne("DataService.Models.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -296,7 +296,7 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", null)
+                    b.HasOne("DataService.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -305,7 +305,7 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", null)
+                    b.HasOne("DataService.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,13 +314,13 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppRole", null)
+                    b.HasOne("DataService.Models.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", null)
+                    b.HasOne("DataService.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -329,18 +329,11 @@ namespace E_Learning_API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("E_Learning_API.Data.Entities.AppUser", null)
+                    b.HasOne("DataService.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("E_Learning_API.Data.Entities.AppUser", b =>
-                {
-                    b.Navigation("Categories");
-
-                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

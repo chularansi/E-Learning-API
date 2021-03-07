@@ -1,6 +1,4 @@
-﻿using E_Learning_API.Data;
-using E_Learning_API.Data.Entities;
-using E_Learning_API.DTO;
+﻿using E_Learning_API.DTO;
 using E_Learning_API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +23,9 @@ using System.Net.Http.Headers;
 using System.Net;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using DataService;
+using DataService.Models;
+using LoggingService;
 
 namespace E_Learning_API.Controllers
 {
@@ -258,7 +259,7 @@ namespace E_Learning_API.Controllers
                     logger.LogInfo($"{errLocation}: {username} not authenticated");
                     return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Authentication" });
                 }
-                
+
                 return BadRequest(new UserResponseDTO { IsSuccess = false, Message = "Invalid Request" });
             }
             catch (Exception ex)
